@@ -39,7 +39,7 @@ export function updateProjectStatus(id, status) {
     })
 }
 
-export function archiveproject(id) {
+export function archiveProject(id) {
     return request(`/projects/${id}/archive`, {
         method: 'PATCH',
     })

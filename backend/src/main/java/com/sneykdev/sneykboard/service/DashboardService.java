@@ -30,6 +30,7 @@ public class DashboardService {
     public DashboardSummaryDTO getSummary() {
         List<Project> activeProjects = projectRepository.findAll(ProjectSpecification.isNotArchived());
         List<Project> archivedProjects = projectRepository.findAll(ProjectSpecification.isArchived());
+        LocalDateTime now = LocalDateTime.now();
 
         long totalProjects = activeProjects.size();
 
@@ -38,6 +39,11 @@ public class DashboardService {
         long completed = countByStatus(activeProjects, ProjectStatus.COMPLETED);
         long abandoned = countByStatus(activeProjects, ProjectStatus.ABANDONED);
         long archived = archivedProjects.size();
+        long atRisk = activeProjects.stream()
+                .filter(project -> project.getStatus() != ProjectStatus.COMPLETED)
+                .filter(project -> project.getUpdatedAt() != null)
+                .filter(project -> Duration.between(project.getUpdatedAt(), now).toDays() >= 14)
+                .count();
 
         double averageProgress = activeProjects.stream()
                 .mapToInt(Project::getProgress)
@@ -51,6 +57,7 @@ public class DashboardService {
                 completed,
                 abandoned,
                 archived,
+                atRisk,
                 averageProgress
         );
     }

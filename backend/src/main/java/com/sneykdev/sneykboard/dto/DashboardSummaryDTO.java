@@ -7,6 +7,7 @@ public record DashboardSummaryDTO(
         long completed,
         long abandoned,
         long archived,
+        long atRisk,
         double averageProgress
 ) {
 }

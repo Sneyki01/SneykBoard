@@ -5,7 +5,7 @@ export function getDashboardSummary() {
 }
 
 export function getDashboardRecommendation() {
-    return request('.dashboard.recommendation')
+    return request('/dashboard/recommendation')
 }
 
 export function getAtRiskProjects() {

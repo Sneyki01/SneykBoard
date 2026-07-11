@@ -1,4 +1,4 @@
-const API_BASE_URL = "http:localhost:8080/api"
+const API_BASE_URL = "http://localhost:8080/api"
 
 async function request(endpoint, options = {}) {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -18,7 +18,7 @@ async function request(endpoint, options = {}) {
         return null
     }
 
-    return response.json
+    return response.json()
 }
 
 export default request

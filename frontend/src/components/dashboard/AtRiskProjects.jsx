@@ -3,6 +3,12 @@ import Button from "../ui/Button";
 import StatusBadge from "../common/StatusBadge";
 
 function AtRiskProjects({ projects = [] }) {
+    const safeProjects = Array.isArray(projects) ? projects : []
+
+    console.log(projects)
+    console.log(Array.isArray(projects))
+    console.log(projects.length)
+    
     if (projects.length === 0) {
         return (
             <Card>
@@ -35,7 +41,7 @@ function AtRiskProjects({ projects = [] }) {
                 </h2>
 
                 <div className="mt-6 space-y-4">
-                    {projects.map((project) => (
+                    {safeProjects.map((project) => (
                         <div
                         key={project.projectId}
                         className="rounded-sneyk-lg border border-danger/40 bg-background/70 p-4 shadow-danger-glow transition-all duration-300 hover:scale-[1.01]"

@@ -5,7 +5,7 @@ import StatusBadge from "../common/StatusBadge";
 import PriorityBadge from "../common/PriorityBadge";
 import ProjectTypeBadge from "../common/ProjectTypeBadge";
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, onArchive }) {
     return (
         <Card variant="glow" className="text-left">
             <div className="flex items-start justify-between gap-4">
@@ -36,7 +36,7 @@ function ProjectCard({ project }) {
             <div className="mt-6 flex flex-wrap gap-3">
                 <Button size="sm">Details</Button>
                 <Button size="sm" variant="secondary">Edit</Button>
-                <Button size="sm" variant="danger">Archive</Button>
+                <Button size="sm" variant="danger" onClick={() => onArchive(project.id)}>Archive</Button>
             </div>
         </Card>
     )
