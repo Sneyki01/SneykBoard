@@ -4,8 +4,8 @@ function Modal({ isOpen, title, children, onClose }) {
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 px-4 backdrop-blur-sm">
-            <div className="relative w-full max-w-2xl overflow-hidden rounded-sneyk-2xl border border-primary/60 bg-surface p-6 shadow-primary-glow">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-background/80 px-4 py-6 backdrop-blur-sm">
+            <div className="relative mx-auto my-auto max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-sneyk-2xl border border-primary/60 bg-surface p-6 shadow-primary-glow">
                 <div className="absolute `-right-20` `-top-20` h-48 w-48 rounded-full bg-primary/30 blur-2xl" />
 
                 <div className="relative flex items-start justify-between gap-4">

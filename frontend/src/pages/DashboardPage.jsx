@@ -6,15 +6,14 @@ import AtRiskProjects from '../components/dashboard/AtRiskProjects'
 import { useEffect, useState } from 'react'
 import Modal from '../components/ui/Modal'
 import Button from '../components/ui/Button'
-import { getProjects, archiveProject } from '../services/projectService'
-import Input from '../components/ui/Input'
-import Textarea from '../components/ui/Textarea'
-import Select from '../components/ui/Select'
+import { getProjects, archiveProject, createProject } from '../services/projectService'
+import CreateProjectForm from '../components/projects/CreateProjectForm'
 import {
     getDashboardSummary,
     getDashboardRecommendation,
     getAtRiskProjects,
 } from '../services/dashboardService'
+
 
 function DashboardPage() {
     const [summary, setSummary] = useState(null)
@@ -62,6 +61,16 @@ function DashboardPage() {
         }
     }
 
+    async function handleCreateProject(projectData) {
+        try {
+            await createProject(projectData)
+            setIsCreateModalOpen(false)
+            await loadDashboardData()
+        } catch (err) {
+            setError(err.message)
+        }
+    }
+
     if (loading) {
         return (
             <DashboardLayout>
@@ -85,13 +94,6 @@ function DashboardPage() {
             </DashboardLayout>
         )
     }
-
-    const priorityOptions = [
-        { value: 'LOW', label: 'Low' },
-        { value: 'MEDIUM', label: 'Medium' },
-        { value: 'HIGH', label: 'High' },
-        { value: 'CRITICAL', label: 'Critical' },
-    ]
 
     return (
         <DashboardLayout>
@@ -143,38 +145,11 @@ function DashboardPage() {
                 title="Create New Project"
                 onClose={() => setIsCreateModalOpen(false)}
             >
-                <div className="space-y-5">
-                    <Input
-                        id="project-title"
-                        label="Project Title"
-                        placeholder="Enter project title"
-                    />
-
-                    <Input
-                        id="project-progress"
-                        label="Progress"
-                        type="number"
-                        min="0"
-                        max="100"
-                        placeholder="0"
-                    />
-
-                    <Textarea
-                        id="project-description"
-                        label="Description"
-                        placeholder="Describe your project..."
-                    />
-
-                    <Select
-                        id="project-priority"
-                        label="Priority"
-                        options={priorityOptions}
-                        placeholder="Select project priority"
-                    />
-
-                </div>
+                <CreateProjectForm
+                onSubmit={handleCreateProject}
+                onCancel={() => setIsCreateModalOpen(false)}
+                />
             </Modal>
-
         </DashboardLayout>
     )
 }
