@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react'
 import Input from '../ui/Input'
 import TextArea from '../ui/TextArea'
 import Select from '../ui/Select'
-import { useState } from 'react'
 import Button from '../ui/Button'
 
-const initialForm = {
+const emptyProject = {
     title: '',
     description: '',
     status: '',
@@ -38,13 +38,30 @@ const projectTypeOptions = [
     { value: 'PERSONAL', label: 'Personal' },
 ]
 
+function buildInitialForm(initialData) {
+    return {
+        ...emptyProject,
+        ...initialData,
+        progress: Number(initialData?.progress ?? 0),
+    }
+}
 
+function ProjectForm({
+    initialData = emptyProject,
+    mode = 'create',
+    onSubmit,
+    onCancel,
+}) {
+    const [formData, setFormData] = useState(() =>
+    buildInitialForm(initialData)
+)
+const [errors, setErrors] = useState({})
 
+useEffect(() => {
+    setFormData(buildInitialForm(initialData))
+    setErrors({})
+}, [initialData])
 
-function CreateProjectForm({ onSubmit, onCancel }) {
-    const [formData, setFormData] = useState(initialForm)
-    const [errors, setErrors] = useState({})
-    
     function handleChange(event) {
         const { name, value } = event.target
         
@@ -52,7 +69,15 @@ function CreateProjectForm({ onSubmit, onCancel }) {
             ...currentForm,
             [name]: name === 'progress' ? Number(value) : value,
         }))
+
+        if (errors[name]) {
+            setErrors((currentErrors) => ({
+                ...currentErrors,
+                [name]: undefined,
+            }))
+        }
     }
+
     //Validacion provicional
     function validateForm() {
         const nextErrors = {}
@@ -95,6 +120,9 @@ function CreateProjectForm({ onSubmit, onCancel }) {
         
         await onSubmit(formData)
     }
+
+    const submitLabel =
+    mode === 'edit' ? 'Save Changes' : 'Create project'
     
     return (
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -158,7 +186,6 @@ function CreateProjectForm({ onSubmit, onCancel }) {
                 type="number"
                 min="0"
                 max="100"
-                placeholder="0"
                 value={formData.progress}
                 onChange={handleChange}
                 error={errors.progress}
@@ -170,11 +197,11 @@ function CreateProjectForm({ onSubmit, onCancel }) {
                 </Button>
 
                 <Button type="submit">
-                    Create Project
+                    {submitLabel}
                 </Button>
             </div>
         </form>
     )
 }
 
-export default CreateProjectForm
+export default ProjectForm

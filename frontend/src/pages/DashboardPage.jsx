@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import Modal from '../components/ui/Modal'
 import Button from '../components/ui/Button'
 import { getProjects, archiveProject, createProject } from '../services/projectService'
-import CreateProjectForm from '../components/projects/CreateProjectForm'
+import ProjectForm from '../components/projects/ProjectForm'
 import {
     getDashboardSummary,
     getDashboardRecommendation,
@@ -145,7 +145,8 @@ function DashboardPage() {
                 title="Create New Project"
                 onClose={() => setIsCreateModalOpen(false)}
             >
-                <CreateProjectForm
+                <ProjectForm
+                mode="create"
                 onSubmit={handleCreateProject}
                 onCancel={() => setIsCreateModalOpen(false)}
                 />

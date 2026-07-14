@@ -1,8 +1,27 @@
 # 🚀 SneykBoard
 
-**SneykBoard** is a personal Dev & QA Mission Control built as part of the **SneykDev** ecosystem.
+### Personal Dev & QA Mission Control
 
-Its purpose is to centralize software development, QA automation, learning, deployment and personal projects into a single modern dashboard inspired by futuristic operating systems.
+![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?style=for-the-badge&logo=springboot)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=for-the-badge&logo=tailwindcss)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=for-the-badge&logo=postgresql)
+![Maven](https://img.shields.io/badge/Maven-Build-C71A36?style=for-the-badge&logo=apachemaven)
+![License](https://img.shields.io/badge/License-Personal-purple?style=for-the-badge)
+
+---
+
+> Personal Mission Control for Developers & QA Engineers.
+>
+> Built with Spring Boot, React and the SneykOS Design System.
+
+
+
+**SneykBoard** is a Full Stack personal software project management platform built as part of the **SneykDev** ecosystem.
+
+It centralizes software development, QA automation, learning, deployments and personal projects into a single Mission Control dashboard inspired by futuristic operating systems.
 
 ---
 
@@ -16,10 +35,37 @@ SneykBoard helps organize and visualize:
 - Blocked projects
 - Completed projects
 - Archived projects
-- Projects at risk of abandonment
+- Projects at risk
 - Priority levels
 - Progress tracking
+- Dashboard analytics
 - Recommended next actions
+
+---
+
+| Status | Version |
+|--------|---------|
+| 🟢 Active Development | v0.3.0 |
+| Backend | ✅ Stable |
+| Frontend | ✅ Stable |
+| Integration | ✅ Complete |
+
+---
+
+# Current Features
+
+SneykBoard currently supports:
+
+- Full Stack architecture (Spring Boot + React)
+- PostgreSQL persistence
+- Dynamic dashboard
+- Live dashboard statistics
+- Project creation
+- Project archiving
+- Dashboard recommendation engine
+- At Risk project detection
+- Reusable UI component library
+- Reusable project forms
 
 ---
 
@@ -58,6 +104,36 @@ SneykBoard helps organize and visualize:
 
 ---
 
+# Architecture
+
+## Backend
+
+```text
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+PostgreSQL
+```
+
+## Frontend
+
+```text
+Pages
+    ↓
+Components
+    ↓
+UI Library
+    ↓
+Service Layer
+    ↓
+REST API
+```
+
+---
+
 # Project Structure
 
 ```text
@@ -78,61 +154,93 @@ SneykBoard/
 
 ---
 
-# Backend MVP
+# Backend Features
 
 ✅ Project CRUD
 
-✅ Soft delete through project archiving
+✅ Soft Delete (Archive)
 
-✅ Restore archived projects
+✅ Restore Archived Projects
 
-✅ Dynamic filtering using Spring Data JPA Specifications
+✅ Dynamic Filtering (Spring Data JPA Specifications)
 
-✅ Dashboard Summary endpoint
+✅ Dashboard Summary
 
-✅ Dashboard Recommendation endpoint
+✅ Dashboard Recommendation
 
-✅ At Risk Projects endpoint
-
-✅ Custom Exception Handling
+✅ At Risk Projects Detection
 
 ✅ Validation Error Handling
 
-✅ PostgreSQL persistence
+✅ Custom Exception Handling
+
+✅ PostgreSQL Persistence
 
 ---
 
-# Frontend MVP
+# Frontend Features
 
-✅ React + Vite setup
+## Foundation
 
-✅ Tailwind CSS integration
+✅ React + Vite
 
-✅ Design System
+✅ Tailwind CSS
 
-✅ Dashboard Layout
+✅ SneykOS Design System
 
-✅ UI Kit
+---
+
+## UI Library
 
 - Card
 - Button
 - Badge
 - ProgressBar
+- Modal
+- Input
+- TextArea
+- Select
 
-✅ Dashboard Components
+---
+
+## Dashboard Components
 
 - SummaryCard
 - RecommendationCard
 - ProjectCard
 - AtRiskProjects
 
-✅ Service Layer
+---
+
+## Forms
+
+- ProjectForm (Reusable)
+
+---
+
+## Service Layer
 
 - apiClient
 - dashboardService
 - projectService
 
-✅ Mock Data integration
+---
+
+## Current Functionality
+
+✅ Dashboard connected to Spring Boot API
+
+✅ Live Dashboard Summary
+
+✅ Live Recommendation Engine
+
+✅ Live At Risk Projects
+
+✅ Create Project
+
+✅ Archive Project
+
+✅ Automatic Dashboard Refresh
 
 ---
 
@@ -176,9 +284,13 @@ GET    /api/dashboard/at-risk
 ```text
 ✅ Backend MVP
 ✅ Frontend MVP
-⬜ Backend + Frontend Integration
+✅ Full Stack Integration
+
+🟨 Project CRUD UI (In Progress)
+
+⬜ Edit Project
+⬜ Restore Project
 ⬜ Authentication
-⬜ Project CRUD UI
 ⬜ Deployment
 ⬜ CI/CD
 ```
@@ -187,13 +299,28 @@ GET    /api/dashboard/at-risk
 
 # Visual Identity
 
-**SneykOS**
+## SneykOS
 
 Dark Neon • CyberQA • Gaming Dashboard
 
-SneykBoard is designed to feel like a personal Mission Control Center for software development and QA automation.
+SneykBoard is designed to feel like a personal Mission Control Center for developers and QA engineers.
 
-The visual language follows the official SneykDev Design System.
+The visual language follows the official **SneykOS Design System**, providing a futuristic interface with reusable UI components.
+
+---
+
+# Design Philosophy
+
+SneykBoard follows a clean layered architecture focused on:
+
+- Reusable Components
+- Separation of Responsibilities
+- Scalable Architecture
+- Clean Code
+- Developer Experience
+- Modern UI Design
+
+The goal is to build a production-ready Full Stack application rather than a tutorial project.
 
 ---
 
@@ -250,14 +377,59 @@ docs/roadmap.md
 
 ---
 
+# Project Goals
+
+SneykBoard is being developed as:
+
+- Personal Mission Control
+- Portfolio Project
+- Spring Boot learning platform
+- React architecture playground
+- QA Dashboard
+- Future SaaS foundation
+
+---
+
 # Current Version
 
 ```text
-v0.2.0
+v0.3.0
 
 ✔ Backend MVP Complete
+
 ✔ Frontend MVP Complete
 
-Next Milestone:
-Backend ↔ Frontend Integration
+✔ First Full Stack Integration
+
+Current Features
+
+✔ Live Dashboard
+
+✔ Dashboard Summary
+
+✔ Recommendation Engine
+
+✔ At Risk Detection
+
+✔ Project Creation
+
+✔ Project Archiving
+
+✔ Reusable UI Library
+
+✔ Reusable Project Form
+
+Next Milestone
+
+Project CRUD UI Completion
+
+- Edit Project
+- Restore Project
+- Project Details
 ```
+
+---
+
+# License
+
+Personal project developed as part of the **SneykDev Ecosystem**.
