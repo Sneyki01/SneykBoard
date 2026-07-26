@@ -6,8 +6,17 @@ import AtRiskProjects from '../components/dashboard/AtRiskProjects'
 import { useEffect, useState } from 'react'
 import Modal from '../components/ui/Modal'
 import Button from '../components/ui/Button'
-import { getProjects, archiveProject, createProject } from '../services/projectService'
+import ProjectDetails from '../components/projects/ProjectDetails'
+import { 
+    getProjects,
+    getArchivedProjects,
+    archiveProject,
+    createProject,
+    updateProject,
+    restoreProject
+    } from '../services/projectService'
 import ProjectForm from '../components/projects/ProjectForm'
+import ArchivedProjects from '../components/projects/ArchivedProjects'
 import {
     getDashboardSummary,
     getDashboardRecommendation,
@@ -23,7 +32,15 @@ function DashboardPage() {
     const [error, setError] = useState(null)
     const [projects, setProjects] = useState([])
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
-    
+    const [selectedProject, setSelectedProject] = useState(null)
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [archivedProjects, setArchivedProjects] = useState([])
+    const [isArchivedModalOpen, setIsArchivedModalOpen] = useState(false)
+    const [archivedProjectsLoading, setArchivedProjectsLoading] = useState(false)
+    const [archivedProjectsError, setArchivedProjectsError] = useState(null)
+    const [restoringProjectId, setRestoringProjectId] = useState(null)
+    const [projectDetails, setProjectDetails] = useState(null)
+    const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false)
 
     async function loadDashboardData() {
         try {
@@ -71,6 +88,90 @@ function DashboardPage() {
         }
     }
 
+    async function handleUpdateProject(projectData) {
+        if (!selectedProject) {
+            return
+        }
+
+        try {
+            await updateProject(selectedProject.id, projectData)
+            handleCloseEditModal()
+            await loadDashboardData()
+        } catch (err) {
+            setError(err.message)
+        }
+    }
+
+    function handleOpenEditModal (project) {
+        setSelectedProject(project)
+        setIsEditModalOpen(true)
+    }
+
+    function handleCloseEditModal() {
+        setIsEditModalOpen(false)
+        setSelectedProject(null)
+    }
+
+    async function loadArchivedProjects() {
+        try {
+            setArchivedProjectsLoading(true)
+            setArchivedProjectsError(null)
+
+            const data = await getArchivedProjects()
+
+            setArchivedProjects(Array.isArray(data) ? data : [])
+        } catch (err) {
+            setArchivedProjectsError(
+                err.message || 'Unable to load archived projects.',
+            )
+        } finally {
+            setArchivedProjectsLoading(false)
+        }
+    }
+
+    async function handleOpenArchivedModal() {
+        setIsArchivedModalOpen(true)
+        await loadArchivedProjects()
+    }
+
+    function handleCloseArchivedModal() {
+        setIsArchivedModalOpen(false)
+        setArchivedProjectsError(null)
+    }
+
+    async function handleRestoreProject(projectId) {
+        try {
+            setRestoringProjectId(projectId)
+            setArchivedProjectsError(null)
+
+            await restoreProject(projectId)
+
+            setArchivedProjects((currentProjects) => 
+            currentProjects.filter((project) => project.id !== projectId),
+        )
+
+        await loadDashboardData()
+        } catch (err) {
+            setArchivedProjectsError(
+                err.message || 'Unable to restore the project.',
+            )
+        } finally {
+            setRestoringProjectId(null)
+        }
+    }
+
+    function handleOpenDetails(project) {
+        setProjectDetails(project);
+        setIsDetailsModalOpen(true);
+    }
+
+    function handleCloseDetails() {
+        setProjectDetails(null);
+        setIsDetailsModalOpen(false);
+    }
+
+
+
     if (loading) {
         return (
             <DashboardLayout>
@@ -109,9 +210,19 @@ function DashboardPage() {
                 Personal Dev & QA Mission Control
             </p>
 
-            <div className="mt-8">
-                <Button onClick={() => setIsCreateModalOpen(true)}>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Button
+                    variant="primary"
+                    onClick={() => setIsCreateModalOpen(true)}
+                >
                     New Project
+                </Button>
+
+                <Button
+                    variant="danger"
+                    onClick={handleOpenArchivedModal}
+                >
+                    Archived Projects
                 </Button>
             </div>
 
@@ -133,13 +244,17 @@ function DashboardPage() {
 
             <div className='mt-10 grid gap-6 lg:grid-cols-2'>
                 {projects.map((project) => (
-                    <ProjectCard key={project.id}
+                    <ProjectCard 
+                    key={project.id}
                     project={project}
-                    onArchive={handleArchiveProject} 
+                    onArchive={handleArchiveProject}
+                    onEdit={handleOpenEditModal}
+                    onDetails={handleOpenDetails}
                     />
                 ))}
             </div>
 
+            {/* Modal para crear nuevo proyecto */}
             <Modal
                 isOpen={isCreateModalOpen}
                 title="Create New Project"
@@ -150,6 +265,76 @@ function DashboardPage() {
                 onSubmit={handleCreateProject}
                 onCancel={() => setIsCreateModalOpen(false)}
                 />
+            </Modal>
+            
+            {/* Modal para Editar proyecto */}
+            <Modal
+            isOpen={isEditModalOpen}
+            title="Edit Project"
+            onClose={handleCloseEditModal}
+            >
+                {selectedProject && (
+                    <ProjectForm
+                    mode="edit"
+                    initialData={selectedProject}
+                    onSubmit={handleUpdateProject}
+                    onCancel={handleCloseEditModal}
+                    />
+                )}
+            </Modal>
+
+            {/* Modal para Detalles */}
+            <Modal
+            isOpen={isDetailsModalOpen}
+            title="Project Details"
+            onClose={handleCloseDetails}
+            >
+                {projectDetails && (
+                    <ProjectDetails
+                    project={projectDetails}
+                    />
+                )}
+            </Modal>
+
+            {/* Modal para Proyectos archivados */}
+            <Modal
+            isOpen={isArchivedModalOpen}
+            title="Archived projects"
+            onClose={handleCloseArchivedModal}
+            >
+                {archivedProjectsLoading && (
+                    <div className="py-10 text-center">
+                        <p className="text-text-secondary">
+                            Loading archived projects...
+                        </p>
+                    </div>
+                )}
+
+                {!archivedProjectsLoading && archivedProjectsError && (
+                    <div className="py-6 text-center">
+                        <p className="text-sm text-red-400">
+                            {archivedProjectsError}
+                        </p>
+
+                        <div className="mt-4">
+                            <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={loadArchivedProjects}
+                            >
+                                Try again
+                            </Button>
+                        </div>
+                    </div>
+                )}
+
+                {!archivedProjectsLoading && !archivedProjectsError && (
+                    <ArchivedProjects
+                    projects={archivedProjects}
+                    onRestore={handleRestoreProject}
+                    restoringProjectId={restoringProjectId}
+                    />
+                )}
             </Modal>
         </DashboardLayout>
     )
