@@ -45,7 +45,7 @@ SneykBoard helps organize and visualize:
 
 | Status | Version |
 |--------|---------|
-| 🟢 Active Development | v0.3.0 |
+| 🟢 Active Development | v0.4.0 |
 | Backend | ✅ Stable |
 | Frontend | ✅ Stable |
 | Integration | ✅ Complete |
@@ -60,12 +60,16 @@ SneykBoard currently supports:
 - PostgreSQL persistence
 - Dynamic dashboard
 - Live dashboard statistics
-- Project creation
-- Project archiving
+- Project CRUD
+- Edit project
+- Archive projects
+- Restore archived projects
+- Detailed project view
 - Dashboard recommendation engine
 - At Risk project detection
 - Reusable UI component library
-- Reusable project forms
+- SneykOS Design System
+- Responsive modal system
 
 ---
 
@@ -158,21 +162,21 @@ SneykBoard/
 
 ✅ Project CRUD
 
-✅ Soft Delete (Archive)
+✅ Archive Projects
 
-✅ Restore Archived Projects
-
-✅ Dynamic Filtering (Spring Data JPA Specifications)
+✅ Restore Projects
 
 ✅ Dashboard Summary
 
-✅ Dashboard Recommendation
+✅ Recommendation Engine
 
-✅ At Risk Projects Detection
+✅ At Risk Detection
 
-✅ Validation Error Handling
+✅ Specifications Filtering
 
-✅ Custom Exception Handling
+✅ Validation
+
+✅ Exception Handling
 
 ✅ PostgreSQL Persistence
 
@@ -180,26 +184,45 @@ SneykBoard/
 
 # Frontend Features
 
-## Foundation
+## Dashboard
 
-✅ React + Vite
+✅ Summary Cards
 
-✅ Tailwind CSS
+✅ Recommendation Card
 
-✅ SneykOS Design System
+✅ At Risk Projects
+
+✅ Project Cards
+
+---
+
+## Project Management
+
+✅ Create Project
+
+✅ Edit Project
+
+✅ Archive Project
+
+✅ Restore Project
+
+✅ Project Details
 
 ---
 
 ## UI Library
 
-- Card
-- Button
-- Badge
-- ProgressBar
-- Modal
-- Input
-- TextArea
-- Select
+-Card
+-Button
+-Badge
+-Modal
+-ProgressBar
+-Input
+-Textarea
+-Select
+-StatusBadge
+-PriorityBadge
+-ProjectTypeBadge
 
 ---
 
@@ -232,15 +255,23 @@ SneykBoard/
 
 ✅ Live Dashboard Summary
 
-✅ Live Recommendation Engine
+✅ Recommendation Engine
 
-✅ Live At Risk Projects
+✅ At Risk Detection
 
-✅ Create Project
+✅ Full Project CRUD
 
-✅ Archive Project
+✅ Archive Workflow
+
+✅ Restore Workflow
+
+✅ Project Details
 
 ✅ Automatic Dashboard Refresh
+
+✅ Reusable Forms
+
+✅ UI Polish (Phase 1)
 
 ---
 
@@ -285,14 +316,23 @@ GET    /api/dashboard/at-risk
 ✅ Backend MVP
 ✅ Frontend MVP
 ✅ Full Stack Integration
+✅ Project Management Module
 
-🟨 Project CRUD UI (In Progress)
+🟨 Smart Search
 
-⬜ Edit Project
-⬜ Restore Project
-⬜ Authentication
+⬜ Advanced Filters
+⬜ Sorting
+⬜ Toast Notifications
+
+────────────
+
+Version 1.0 Polish
+
+⬜ Animations
+⬜ Responsive Improvements
+⬜ Accessibility
+⬜ UX Polish
 ⬜ Deployment
-⬜ CI/CD
 ```
 
 ---
@@ -393,39 +433,39 @@ SneykBoard is being developed as:
 # Current Version
 
 ```text
-v0.3.0
+v0.4.0
 
-✔ Backend MVP Complete
+✔ Backend Stable
 
-✔ Frontend MVP Complete
+✔ Frontend Stable
 
-✔ First Full Stack Integration
+✔ Full Stack Integration
+
+✔ Project Management Module
 
 Current Features
 
-✔ Live Dashboard
+✔ Dashboard
 
-✔ Dashboard Summary
+✔ Project CRUD
+
+✔ Edit Project
+
+✔ Archive Project
+
+✔ Restore Project
+
+✔ Project Details
+
+✔ Dashboard Analytics
 
 ✔ Recommendation Engine
 
 ✔ At Risk Detection
 
-✔ Project Creation
-
-✔ Project Archiving
-
-✔ Reusable UI Library
-
-✔ Reusable Project Form
-
 Next Milestone
 
-Project CRUD UI Completion
-
-- Edit Project
-- Restore Project
-- Project Details
+Smart Project Search
 ```
 
 ---
