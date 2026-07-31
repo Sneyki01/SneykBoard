@@ -3,6 +3,7 @@ import ProjectCard from '../components/dashboard/ProjectCard'
 import SummaryCard from '../components/dashboard/SummaryCard'
 import RecommendationCard from '../components/dashboard/RecommendationCard'
 import AtRiskProjects from '../components/dashboard/AtRiskProjects'
+import SearchBar from '../components/dashboard/SearchBar'
 import { useEffect, useState } from 'react'
 import Modal from '../components/ui/Modal'
 import Button from '../components/ui/Button'
@@ -41,6 +42,7 @@ function DashboardPage() {
     const [restoringProjectId, setRestoringProjectId] = useState(null)
     const [projectDetails, setProjectDetails] = useState(null)
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false)
+    const [searchQuery, setSearchQuery] = useState("")
 
     async function loadDashboardData() {
         try {
@@ -210,20 +212,30 @@ function DashboardPage() {
                 Personal Dev & QA Mission Control
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Button
-                    variant="primary"
-                    onClick={() => setIsCreateModalOpen(true)}
-                >
-                    New Project
-                </Button>
+            <div className='mt-8 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between'>
 
-                <Button
-                    variant="danger"
-                    onClick={handleOpenArchivedModal}
-                >
-                    Archived Projects
-                </Button>
+                <div className='flex flex-wrap items-center gap-3'>
+                    <Button 
+                        variant="primary"
+                        onClick={() => setIsCreateModalOpen(true)}
+                    >
+                        New Project
+                    </Button>
+
+                    <Button
+                        variant="danger"
+                        onClick={handleOpenArchivedModal}
+                    >
+                        Archived projects
+                    </Button>
+                </div>
+
+                <div className='w-full lg:max-w-lg'>
+                    <SearchBar
+                        value={searchQuery}
+                        onChange={setSearchQuery}
+                    />
+                </div>
             </div>
 
             
