@@ -8,6 +8,9 @@ import { useEffect, useState } from 'react'
 import Modal from '../components/ui/Modal'
 import Button from '../components/ui/Button'
 import ProjectDetails from '../components/projects/ProjectDetails'
+import useProjectSearch from '../hooks/useProjectSearch'
+import useProjectFilters from '../hooks/useProjectFilters'
+import ProjectFilters from '../components/dashboard/ProjectFilters'
 import { 
     getProjects,
     getArchivedProjects,
@@ -43,6 +46,16 @@ function DashboardPage() {
     const [projectDetails, setProjectDetails] = useState(null)
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
+    const [projectFilters, setProjectFilters] =useState({
+        status: "ALL",
+        priority: "ALL",
+        type: "ALL",
+    });
+    const searchedProjects = useProjectSearch(projects, searchQuery);
+    const filteredProjects = useProjectFilters(
+        searchedProjects,
+        projectFilters
+    );
 
     async function loadDashboardData() {
         try {
@@ -172,6 +185,20 @@ function DashboardPage() {
         setIsDetailsModalOpen(false);
     }
 
+    function handleFilterChange(filterName, value) {
+        setProjectFilters((currentFilters) => ({
+            ...currentFilters,
+            [filterName]: value,
+        }));
+    }
+
+    function handleClearFilters( ) {
+        setProjectFilters({
+            status: "ALL",
+            priority: "ALL",
+            type: "ALL",
+        });
+    }
 
 
     if (loading) {
@@ -234,6 +261,14 @@ function DashboardPage() {
                     <SearchBar
                         value={searchQuery}
                         onChange={setSearchQuery}
+                        resultCount={filteredProjects.length}
+                    />
+
+                    <ProjectFilters
+                    projects={projects}
+                    filters={projectFilters}
+                    onChange={handleFilterChange}
+                    onClear={handleClearFilters}
                     />
                 </div>
             </div>
@@ -255,7 +290,7 @@ function DashboardPage() {
             </div>
 
             <div className='mt-10 grid gap-6 lg:grid-cols-2'>
-                {projects.map((project) => (
+                {filteredProjects.map((project) => (
                     <ProjectCard 
                     key={project.id}
                     project={project}
