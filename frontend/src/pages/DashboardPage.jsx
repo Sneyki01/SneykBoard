@@ -11,6 +11,9 @@ import ProjectDetails from '../components/projects/ProjectDetails'
 import useProjectSearch from '../hooks/useProjectSearch'
 import useProjectFilters from '../hooks/useProjectFilters'
 import ProjectFilters from '../components/dashboard/ProjectFilters'
+import useProjectSorting from '../hooks/useProjectSorting'
+import ProjectSort from '../components/dashboard/ProjectSort'
+import useToast from '../hooks/useToast'
 import { 
     getProjects,
     getArchivedProjects,
@@ -51,11 +54,17 @@ function DashboardPage() {
         priority: "ALL",
         type: "ALL",
     });
+    const [sortOption, setSortOption] = useState("DEFAULT");
     const searchedProjects = useProjectSearch(projects, searchQuery);
     const filteredProjects = useProjectFilters(
         searchedProjects,
         projectFilters
     );
+    const sortedProjects = useProjectSorting(
+        filteredProjects,
+        sortOption
+    );
+    const { showToast } = useToast();
 
     async function loadDashboardData() {
         try {
@@ -87,33 +96,69 @@ function DashboardPage() {
     async function handleArchiveProject(projectId) {
         try {
             await archiveProject(projectId)
-            await loadDashboardData()
+
+            showToast({
+                type: "success",
+                title: "Project archived",
+                message: "The project was moved to archived projects.",
+            });
+
+            await loadDashboardData();
                 } catch (err) {
-            setError(err.message)
+
+                    showToast({
+                        type: "error",
+                        title: "Unable to archive project",
+                        message: err.message || "Please try again",
+                    });
         }
     }
 
     async function handleCreateProject(projectData) {
         try {
-            await createProject(projectData)
-            setIsCreateModalOpen(false)
+            await createProject(projectData);
+            
+            setIsCreateModalOpen(false);
+
+            showToast({
+                type: "success",
+                title: "Project created",
+                message: "The project was created succesfully.",
+            });
+
             await loadDashboardData()
         } catch (err) {
-            setError(err.message)
+            showToast({
+                type: "error",
+                title: "Unable to create project",
+                message: err.message || "Please try again.",
+            });
         }
     }
 
     async function handleUpdateProject(projectData) {
         if (!selectedProject) {
-            return
+            return;
         }
 
         try {
-            await updateProject(selectedProject.id, projectData)
-            handleCloseEditModal()
+            await updateProject(selectedProject.id, projectData);
+
+            handleCloseEditModal();
+
+            showToast({
+                type: "success",
+                title: "Project updated",
+                message: "The project changes were saved succesfully.",
+            });
+
             await loadDashboardData()
         } catch (err) {
-            setError(err.message)
+            showToast({
+                type: "error",
+                title: "Unable to update project",
+                message: err.message || "Please try again",
+            });
         }
     }
 
@@ -162,11 +207,25 @@ function DashboardPage() {
             await restoreProject(projectId)
 
             setArchivedProjects((currentProjects) => 
-            currentProjects.filter((project) => project.id !== projectId),
-        )
+            currentProjects.filter(
+                (project) => project.id !== projectId
+            )
+        );
+
+        showToast({
+            type: "success",
+            title: "Project restored",
+            message: "The project is active again.",
+        });
 
         await loadDashboardData()
         } catch (err) {
+            showToast({
+                type: "error",
+                title: "Unable to restore project",
+                message: err.message || "Please try again.",
+            });
+
             setArchivedProjectsError(
                 err.message || 'Unable to restore the project.',
             )
@@ -239,7 +298,7 @@ function DashboardPage() {
                 Personal Dev & QA Mission Control
             </p>
 
-            <div className='mt-8 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between'>
+            <div className='mt-8 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between'>
 
                 <div className='flex flex-wrap items-center gap-3'>
                     <Button 
@@ -249,6 +308,7 @@ function DashboardPage() {
                         New Project
                     </Button>
 
+                    
                     <Button
                         variant="danger"
                         onClick={handleOpenArchivedModal}
@@ -257,19 +317,35 @@ function DashboardPage() {
                     </Button>
                 </div>
 
-                <div className='w-full lg:max-w-lg'>
-                    <SearchBar
-                        value={searchQuery}
-                        onChange={setSearchQuery}
-                        resultCount={filteredProjects.length}
-                    />
+                <div className='w-full lg:w-3xl xl:w-208'>
+                    <div className='ml-auto w-full lg:max-w-lg'>
+                        <SearchBar
+                            value={searchQuery}
+                            onChange={setSearchQuery}
+                            resultCount={filteredProjects.length}
+                            />
+                    </div>
 
-                    <ProjectFilters
-                    projects={projects}
-                    filters={projectFilters}
-                    onChange={handleFilterChange}
-                    onClear={handleClearFilters}
-                    />
+                    <div className='
+                        mt-3
+                        flex flex-col gap-3
+                        sm:flex-row
+                        sm:flex-wrap
+                        sm:items-center
+                        lg:flex-nowrap
+                        lg:justify-end'>
+                        <ProjectFilters
+                        projects={projects}
+                        filters={projectFilters}
+                        onChange={handleFilterChange}
+                        onClear={handleClearFilters}
+                        />
+
+                        <ProjectSort
+                        value={sortOption}
+                        onChange={setSortOption}
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -290,7 +366,7 @@ function DashboardPage() {
             </div>
 
             <div className='mt-10 grid gap-6 lg:grid-cols-2'>
-                {filteredProjects.map((project) => (
+                {sortedProjects.map((project) => (
                     <ProjectCard 
                     key={project.id}
                     project={project}

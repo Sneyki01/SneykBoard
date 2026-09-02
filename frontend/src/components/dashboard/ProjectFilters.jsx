@@ -47,7 +47,7 @@ function ProjectFilters({
         filters.type !== "ALL";
 
     return (
-        <div className="mt-3 flex flex-wrap items-center justify-end gap-2">
+        <div className="flex flex-wrap items-center gap-2">
 
             <div className="mr-1 flex items-center gap-2 text-xs text-text-secondary">
                 <SlidersHorizontal
