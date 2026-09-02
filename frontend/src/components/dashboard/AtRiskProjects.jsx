@@ -2,12 +2,9 @@ import Card from "../ui/Card";
 import Button from "../ui/Button";
 import StatusBadge from "../common/StatusBadge";
 
-function AtRiskProjects({ projects = [] }) {
+function AtRiskProjects({ projects = [], onReviewProject }) {
     const safeProjects = Array.isArray(projects) ? projects : []
 
-    console.log(projects)
-    console.log(Array.isArray(projects))
-    console.log(projects.length)
     
     if (projects.length === 0) {
         return (
@@ -67,7 +64,7 @@ function AtRiskProjects({ projects = [] }) {
                         </div>
 
                         <div className="mt-4">
-                            <Button size="sm" variant="danger">
+                            <Button size="sm" variant="danger" onClick={() => onReviewProject(project)}>
                                 Review Project
                             </Button>
                         </div>

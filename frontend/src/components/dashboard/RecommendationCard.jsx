@@ -1,7 +1,7 @@
 import Card from '../ui/Card'
 import Button from '../ui/Button'
 
-function RecommendationCard({ recommendation }) {
+function RecommendationCard({ recommendation, onOpenProject }) {
     return (
         <Card variant="glow" className="relative overflow-hidden text-left">
             <div className="absolute inset-0 bg-primary/5" />
@@ -26,7 +26,7 @@ function RecommendationCard({ recommendation }) {
                     </span>
 
                     {recommendation.projectId && (
-                        <Button size="sm" variant="secondary">
+                        <Button size="sm" variant="secondary" onClick={onOpenProject}>
                             Open Project
                         </Button>
                     )}

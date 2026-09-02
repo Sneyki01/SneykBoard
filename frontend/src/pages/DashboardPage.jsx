@@ -239,6 +239,47 @@ function DashboardPage() {
         setIsDetailsModalOpen(true);
     }
 
+    function handleReviewAtRiskProject(atRiskProject)   {
+        const projectId = 
+        atRiskProject.projectId ??
+        atRiskProject.id;
+
+        const fullProject = projects.find(
+            (project) =>
+                String(project.id) === String(projectId)
+        );
+
+        if (!fullProject) {
+            showToast({
+                type : "error",
+                title: "Project unavailable",
+                message: "The project could not be found.",
+            });
+
+            return;
+        }
+
+        handleOpenDetails(fullProject);
+    }
+
+    function handleOpenRecommendedProject() {
+        const recommendedProject = projects.find(
+            (project) => project.id === recommendation.projectId
+        );
+
+        if (!recommendedProject) {
+            showToast({
+                type: "error",
+                title: "Project unavailable",
+                message: "The recommended project could not be found",
+            });
+
+            return;
+        }
+
+        handleOpenDetails(recommendedProject);
+    }
+
     function handleCloseDetails() {
         setProjectDetails(null);
         setIsDetailsModalOpen(false);
@@ -357,12 +398,18 @@ function DashboardPage() {
                 <SummaryCard label="At Risk" value={summary.atRisk} variant="danger" helperText="Needs attention" />
             </div>
 
+            
+
             <div className="mt-8">
-                <RecommendationCard recommendation={recommendation} />
+                <RecommendationCard recommendation={recommendation}
+                onOpenProject={handleOpenRecommendedProject}
+                />
             </div>
 
             <div className="mt-8">
-                <AtRiskProjects projects={atRiskProjects} />
+                <AtRiskProjects projects={atRiskProjects}
+                onReviewProject={handleReviewAtRiskProject}
+                />
             </div>
 
             <div className='mt-10 grid gap-6 lg:grid-cols-2'>
