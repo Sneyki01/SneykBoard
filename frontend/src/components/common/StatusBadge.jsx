@@ -2,7 +2,7 @@ import Badge from "../ui/Badge";
 
 const statusVariants = {
     IDEA: 'default',
-    PLANNED: 'primary',
+    PLANNED: 'info',
     IN_PROGRESS: 'primary',
     BLOCKED: 'danger',
     COMPLETED: 'success',
@@ -19,8 +19,8 @@ const statusLabels = {
 }
 
 function StatusBadge({ status }) {
-    const variant = statusVariants[status] || 'default'
-    const label = statusLabels[status] || status
+    const variant = statusVariants[status] ?? 'default'
+    const label = statusLabels[status] ?? status ?? "Unknown";
 
     return <Badge variant={variant}>{label}</Badge>
 }

@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-    /* Brand Colors */
+/*  ========================================
+    SNEYKDEV BRAND COLORS
+    ======================================== */
     --color-background: #111111;
+
     --color-surface: #1a1a1f;
     --color-surface-hover: #24152f;
 
@@ -12,33 +15,55 @@
 
     --color-border: #2d2038;
 
+/* ========================================
+    TEXT
+   ======================================== */
+
+    --color-text-primary: #f9fdfd;
+    --color-text-secondary: #a7a7b3;
+
+/* ========================================
+    SEMANTIC COLORS
+   ======================================== */
+
     --color-danger: #ff2b6b;
     --color-warning: #ffb020;
     --color-success: #27f5a6;
+    --color-info: #3b82f6;
 
-    /* fonts */
+/* ========================================
+    TYPOGRAPHY
+   ======================================== */
     --font-display: "Orbitron", sans-serif;
     --font-body: "Inter", sans-serif;
 
-    /* Radius */ 
-    --radius-sneyk-ms: 0.5rem;
+/* ========================================
+    BORDER RADIUS
+   ======================================== */
+    --radius-sneyk-sm: 0.5rem;
     --radius-sneyk-md: 0.75rem;
     --radius-sneyk-lg: 1rem;
     --radius-sneyk-xl: 1.5rem;
-    --radius-sneyk2x1: 2rem;
+    --radius-sneyk-2xl: 2rem;
 
-    /* Shadows / Glows */
+/* ========================================
+    SHADOWS / NEON GLOWS
+   ======================================== */
     --shadow-primary-glow: 0 0 24px rgba(118, 38, 218, 0.55);
     --shadow-primary-soft: 0 0 40px rgba(118, 38, 218, 0.25);
     --shadow-danger-glow: 0 0 24px rgba(255, 59, 107, 0.45);
+    --shadow-warning-glow: 0 0 24px rgba(255, 176, 32, 0.30);
     --shadow-success-glow: 0 0 24px rgba(39, 245, 166, 0.35);
+    --shadow-info-glow: 0 0 24px rgba(59, 130, 246, 0.30);
 }
 
 body {
     margin: 0;
     min-height: 100vh;
-    background: #111111;
-    color: #f9fdfd;
-    font-family: "Inter", sans-serif;
+
+    background: var(--color-background);
+    color: var(--color-text-primary);
+
+    font-family: var(--font-body);
 }
 

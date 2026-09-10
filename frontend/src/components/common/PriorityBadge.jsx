@@ -15,10 +15,12 @@ const priorityLabels = {
 }
 
 function PriorityBadge({ priority }) {
-    const variant = priorityVariants[priority] || 'default'
-    const label = priorityLabels[priority] || priority
+    const variant = priorityVariants[priority] ?? 'default'
+    const label = priorityLabels[priority] ?? priority ?? "Unkown";
 
-    return <Badge variant={variant}>{label}</Badge>
+    return (
+    <Badge variant={variant}>{label}</Badge>
+    );
 }
 
 export default PriorityBadge

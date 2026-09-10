@@ -2,10 +2,10 @@ import Badge from "../ui/Badge";
 
 const projectTypeVariants = {
     BACKEND: 'primary',
-    FRONTEND: 'success',
-    FULLSTACK: 'warning',
+    FRONTEND: 'default',
+    FULLSTACK: 'primary',
     QA: 'default',
-    AUTOMATION: 'danger',
+    AUTOMATION: 'primary',
     PERSONAL: 'default',
 }
 
@@ -19,8 +19,8 @@ const projectTypeLabels = {
 }
 
 function ProjectTypeBadge({ type }) {
-    const variant = projectTypeVariants[type] || 'default'
-    const label = projectTypeLabels[type] || type
+    const variant = projectTypeVariants[type] ?? 'default'
+    const label = projectTypeLabels[type] ?? type ?? 'Unknown';
 
     return <Badge variant={variant}>{label}</Badge>
 }

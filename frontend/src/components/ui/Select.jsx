@@ -1,3 +1,5 @@
+import { ChevronDown } from "lucide-react";
+
 function Select({
     label,
     id,
@@ -5,8 +7,15 @@ function Select({
     options = [],
     placeholder = 'Select an option',
     className = '',
+    selectClassName = '',
     ...props
 }) {
+
+    const errorId = 
+        error && id
+            ? `${id}-error`
+            : undefined;
+
     return (
         <div className={className}>
             {label && (
@@ -18,31 +27,54 @@ function Select({
                 </label>
             )}
 
-            <select
-            id={id}
-            className={`w-full rounded-sneyk-md border bg-background px-4 py-3 text-text-primary outline-none transition duration-300 ${
-                error
-                ? 'border-danger focus:border-danger focus:ring-2 focus:ring-danger/30'
-                : 'border-border focus:border-primary focus:ring-2 focus:ring-primary/30'
-            }`}
-            {...props}
-            >
-                <option value="">
-                    {placeholder}
-                </option>
-
-                {options.map((option) => (
-                    <option
-                    key={option.value}
-                    value={option.value}
-                    >
-                        {option.label}
+            <div className="relative">
+                <select
+                id={id}
+                aria-invalid={Boolean(error)}
+                aria-describedby={errorId}
+                className={`h-11 w-full appearance-none rounded-sneyk-md border bg-background px-4 pr-10 text-sm text-text-primary outline-none transition-all duration-300 disabled:cursor-not-allowed disabled:bg-surface disabled:opacity-50
+                    ${
+                        error
+                        ? 'border-danger focus:border-danger focus:ring-2 focus:ring-danger/30'
+                        : 'border-border hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-primary/30'
+                    }
+                    ${selectClassName}
+                    `}
+                {...props}
+                >
+                    <option value="" disabled>
+                        {placeholder}
                     </option>
-                ))}
-            </select>
+
+                    {options.map((option) => (
+                        <option
+                        key={option.value}
+                        value={option.value}
+                        >
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+
+                <ChevronDown
+                    size={18}
+                    aria-hidden="true"
+                    className="
+                        pointer-events-none
+                        absolute
+                        right-3
+                        top-1/2
+                        -translate-y-1/2
+                        text-text-secondary
+                    "
+                    />   
+            </div>
 
             {error && (
-                <p className="mt-2 text-sm text-danger">
+                <p 
+                    id={errorId}
+                    className="mt-2 text-xs text-danger"
+                    >
                     {error}
                 </p>
             )}
