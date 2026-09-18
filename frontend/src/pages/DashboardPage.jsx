@@ -149,7 +149,7 @@ function DashboardPage() {
             showToast({
                 type: "success",
                 title: "Project updated",
-                message: "The project changes were saved succesfully.",
+                message: "The project changes were saved successfully.",
             });
 
             await loadDashboardData()
@@ -327,7 +327,7 @@ function DashboardPage() {
 
     return (
         <DashboardLayout>
-            <p className="font-display text-sm uppercase tracking-[0.4em] text-primary">
+            <p className="font-display text-sm uppercase tracking-[0.4em] text-primary-soft">
                 SneykDev Ecosystem
             </p>
 
@@ -351,7 +351,7 @@ function DashboardPage() {
 
                     
                     <Button
-                        variant="danger"
+                        variant="secondary"
                         onClick={handleOpenArchivedModal}
                     >
                         Archived projects
@@ -406,24 +406,37 @@ function DashboardPage() {
                 />
             </div>
 
+
             <div className="mt-8">
                 <AtRiskProjects projects={atRiskProjects}
                 onReviewProject={handleReviewAtRiskProject}
                 />
             </div>
 
-            <div className='mt-10 grid gap-6 lg:grid-cols-2'>
-                {sortedProjects.map((project) => (
-                    <ProjectCard 
-                    key={project.id}
-                    project={project}
-                    onArchive={handleArchiveProject}
-                    onEdit={handleOpenEditModal}
-                    onDetails={handleOpenDetails}
-                    />
-                ))}
-            </div>
+            <section className='mt-10'>
+                <div className='mb-6'>
+                    <p className='font-display text-xs uppercase tracking-[0.22] text-primary-soft'>
+                        Project workspace
+                    </p>
 
+                    <h2
+                        className='mt-2 font-display text-2xl text-text-primary'>
+                            Projects
+                    </h2>
+                </div>
+
+                <div className='grid gap-6 lg:grid-cols-2'>
+                    {sortedProjects.map((project) => (
+                        <ProjectCard 
+                        key={project.id}
+                        project={project}
+                        onArchive={handleArchiveProject}
+                        onEdit={handleOpenEditModal}
+                        onDetails={handleOpenDetails}
+                        />
+                    ))}
+                </div>
+            </section>
             {/* Modal para crear nuevo proyecto */}
             <Modal
                 isOpen={isCreateModalOpen}
@@ -482,7 +495,7 @@ function DashboardPage() {
 
                 {!archivedProjectsLoading && archivedProjectsError && (
                     <div className="py-6 text-center">
-                        <p className="text-sm text-red-400">
+                        <p className="text-sm text-danger">
                             {archivedProjectsError}
                         </p>
 
