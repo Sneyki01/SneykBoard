@@ -5,18 +5,26 @@ function ToastContainer({ toasts, onClose }) {
         <div
         className="
         pointer-events-none
-        fixed right-5 top-5 z-100
-        flex w-[calc(100%-2.5rem)]
-        max-w-sm flex-col gap-3
+        fixed 
+        left-5 
+        right-5 
+        top-5 
+        z-100
+        flex 
+        flex-col
+        gap-3
+        sm:left-auto
+        sm:w-full
+        sm:max-w-sm
         "
         aria-live="polite"
         aria-relevant="additions removals"
         >
             {toasts.map((toast) => (
                 <Toast
-                key={toast.id}
-                {...toast}
-                onClose={onClose}
+                    key={toast.id}
+                    {...toast}
+                    onClose={onClose}
                 />
             ))}
         </div>

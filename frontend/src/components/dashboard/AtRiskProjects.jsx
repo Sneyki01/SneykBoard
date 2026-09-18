@@ -1,15 +1,16 @@
 import Card from "../ui/Card";
 import Button from "../ui/Button";
+import Badge from "../ui/Badge";
 import StatusBadge from "../common/StatusBadge";
 
 function AtRiskProjects({ projects = [], onReviewProject }) {
     const safeProjects = Array.isArray(projects) ? projects : []
 
     
-    if (projects.length === 0) {
+    if (safeProjects.length === 0) {
         return (
             <Card>
-                <p className="font-display text-xs uppercase tracking-[0.22em] text-text-muted">
+                <p className="font-display text-xs uppercase tracking-[0.22em] text-text-secondary/70">
                     At Risk Projects
                 </p>
 
@@ -26,7 +27,7 @@ function AtRiskProjects({ projects = [], onReviewProject }) {
 
     return (
         <Card variant="danger" className="relative overflow-hidden">
-            <div className="absolute right-[-80px] top-[-80px] h-44 w-44 rounded-full bg-danger/20 blur-3xl"/>
+            <div className="pointer-events-none absolute -right-20 -top-20 h-44 w-44 rounded-full bg-danger/20 blur-3xl"/>
 
             <div className="relative">
                 <p className="font-display text-xs uppercase tracking-[0.22em] text-danger">
@@ -40,8 +41,8 @@ function AtRiskProjects({ projects = [], onReviewProject }) {
                 <div className="mt-6 space-y-4">
                     {safeProjects.map((project) => (
                         <div
-                        key={project.projectId}
-                        className="rounded-sneyk-lg border border-danger/40 bg-background/70 p-4 shadow-danger-glow transition-all duration-300 hover:scale-[1.01]"
+                            key={project.projectId}
+                            className="rounded-sneyk-lg border border-danger/40 bg-background/70 p-4"
                         >
                         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                             <div>
@@ -57,9 +58,9 @@ function AtRiskProjects({ projects = [], onReviewProject }) {
                             <div className="flex flex-wrap gap-2">
                                 <StatusBadge status={project.status}/>
 
-                                <span className="rounded-full border border-danger/50 bg-danger/10 px-3 py-1 font-display text-xs uppercase tracking-[0.16em] text-danger">
+                                <Badge variant="danger">
                                     {project.riskLevel}
-                                </span>
+                                </Badge>
                             </div>
                         </div>
 
@@ -73,7 +74,7 @@ function AtRiskProjects({ projects = [], onReviewProject }) {
                 </div>
             </div>
         </Card>
-    )
+    );
 }
 
-export default AtRiskProjects
+export default AtRiskProjects;

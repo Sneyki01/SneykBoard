@@ -17,18 +17,25 @@ import {
 
 function SectionTitle({ icon: Icon, children }) {
     return (
-        <div className="flex items-center gap-2 text-primary">
+        <div className="flex items-center gap-2 text-primary-soft">
             <Icon
-            size={17}
-            strokeWidth={2}
-            aria-hidden="true"
+                size={17}
+                strokeWidth={2}
+                aria-hidden="true"
             />
 
-            <h3 className="font-display text-xs uppercase tracking-[0.18em]">
+            <h3
+                className="
+                    font-display
+                    text-xs
+                    uppercase
+                    tracking-[0.18em]
+                "
+            >
                 {children}
             </h3>
         </div>
-    )
+    );
 }
 
 function ProjectDetails({ project }) {
@@ -77,33 +84,49 @@ function ProjectDetails({ project }) {
 
             {/* General information */}
 
-            <section className="border-t border-border pt-6">
-                <p className="font-display text-xs uppercase tracking-[0.18em] text-primary">
-                    General information
-                </p>
+<section className="border-t border-border pt-6">
+    <SectionTitle icon={Info}>
+        General Information
+    </SectionTitle>
 
-                <div className="mt-5">
-                    <div className="rounded-xl border border-border bg-background/40 p-4">
-                        <div className="flex items-start gap-3">
-                            <CalendarDays
-                            size={20}
-                            className="mt-0.5 shrink-0 text-primary"
-                            aria-hidden="true"
-                            />
+    <div className="mt-5">
+        <div
+            className="
+                rounded-sneyk-lg
+                border
+                border-border
+                bg-background/40
+                p-4
+            "
+        >
+            <div className="flex items-start gap-3">
+                <CalendarDays
+                    size={20}
+                    className="mt-0.5 shrink-0 text-primary-soft"
+                    aria-hidden="true"
+                />
 
-                            <div>
-                                <p className="text-xs uppercase tracking-wider text-text-secondary">
-                                    Due date
-                                </p>
+                <div>
+                    <p
+                        className="
+                            font-display
+                            text-xs
+                            uppercase
+                            tracking-[0.16em]
+                            text-text-secondary
+                        "
+                    >
+                        Due date
+                    </p>
 
-                                <p className="mt-2 font-medium text-text-primary">
-                                    {formatDate(project.dueDate)}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <p className="mt-2 font-medium text-text-primary">
+                        {formatDate(project.dueDate)}
+                    </p>
                 </div>
-            </section>
+            </div>
+        </div>
+    </div>
+</section>
 
             {/* Project Links */}
             <section className="border-t border-border pt-6">

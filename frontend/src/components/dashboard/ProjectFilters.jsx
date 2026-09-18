@@ -1,4 +1,10 @@
-import { RotateCcw, SlidersHorizontal } from "lucide-react";
+import {
+    RotateCcw,
+    SlidersHorizontal,
+} from "lucide-react";
+
+import Select from "../ui/Select";
+import Button from "../ui/Button";
 
 function formatOptionLabel(value) {
     return String(value)
@@ -19,27 +25,50 @@ function getUniqueValues(projects, property) {
     ].sort();
 }
 
-
 function ProjectFilters({
-    projects,
+    projects = [],
     filters,
     onChange,
     onClear,
 }) {
-    const statusOptions = getUniqueValues(
-        projects,
-        "status"
-    );
+    const statusOptions = [
+        {
+            value: "ALL",
+            label: "All Status",
+        },
+        ...getUniqueValues(projects, "status").map(
+            (status) => ({
+                value: status,
+                label: formatOptionLabel(status),
+            })
+        ),
+    ];
 
-    const priorityOptions = getUniqueValues(
-        projects,
-        "priority"
-    );
+    const priorityOptions = [
+        {
+            value: "ALL",
+            label: "All Priority",
+        },
+        ...getUniqueValues(projects, "priority").map(
+            (priority) => ({
+                value: priority,
+                label: formatOptionLabel(priority),
+            })
+        ),
+    ];
 
-    const typeOptions = getUniqueValues(
-        projects,
-        "type"
-    );
+    const typeOptions = [
+        {
+            value: "ALL",
+            label: "All Types",
+        },
+        ...getUniqueValues(projects, "type").map(
+            (type) => ({
+                value: type,
+                label: formatOptionLabel(type),
+            })
+        ),
+    ];
 
     const hasActiveFilters =
         filters.status !== "ALL" ||
@@ -47,9 +76,21 @@ function ProjectFilters({
         filters.type !== "ALL";
 
     return (
-        <div className="flex flex-wrap items-center gap-2">
-
-            <div className="mr-1 flex items-center gap-2 text-xs text-text-secondary">
+        <div className="flex flex-wrap items-center gap-2 lg:flex-nowrap">
+            <div
+                className="
+                    mr-1
+                    flex
+                    shrink-0
+                    items-center
+                    gap-2
+                    font-display
+                    text-xs
+                    uppercase
+                    tracking-[0.16em]
+                    text-text-secondary
+                "
+            >
                 <SlidersHorizontal
                     size={16}
                     aria-hidden="true"
@@ -58,131 +99,46 @@ function ProjectFilters({
                 <span>Filters</span>
             </div>
 
-            {/* Status */}
-            <select
+            <Select
                 value={filters.status}
                 onChange={(event) =>
-                    onChange(
-                        "status",
-                        event.target.value
-                    )
+                    onChange("status", event.target.value)
                 }
+                options={statusOptions}
+                placeholder={null}
                 aria-label="Filter projects by status"
-                className="
-                    rounded-lg
-                    border border-border
-                    bg-surface
-                    px-3 py-2
-                    text-sm text-text-primary
-                    outline-none
-                    transition
-                    hover:border-primary/60
-                    focus:border-primary
-                "
-            >
-                <option value="ALL">
-                    All Status
-                </option>
+                className="w-32 shrink-0"
+            />
 
-                {statusOptions.map((status) => (
-                    <option
-                        key={status}
-                        value={status}
-                    >
-                        {formatOptionLabel(status)}
-                    </option>
-                ))}
-            </select>
-
-
-            {/* Priority */}
-            <select
+            <Select
                 value={filters.priority}
                 onChange={(event) =>
-                    onChange(
-                        "priority",
-                        event.target.value
-                    )
+                    onChange("priority", event.target.value)
                 }
+                options={priorityOptions}
+                placeholder={null}
                 aria-label="Filter projects by priority"
-                className="
-                    rounded-lg
-                    border border-border
-                    bg-surface
-                    px-3 py-2
-                    text-sm text-text-primary
-                    outline-none
-                    transition
-                    hover:border-primary/60
-                    focus:border-primary
-                "
-            >
-                <option value="ALL">
-                    All Priority
-                </option>
+                className="w-36 shrink-0"
+            />
 
-                {priorityOptions.map((priority) => (
-                    <option
-                        key={priority}
-                        value={priority}
-                    >
-                        {formatOptionLabel(priority)}
-                    </option>
-                ))}
-            </select>
-
-
-            {/* Type */}
-            <select
+            <Select
                 value={filters.type}
                 onChange={(event) =>
-                    onChange(
-                        "type",
-                        event.target.value
-                    )
+                    onChange("type", event.target.value)
                 }
+                options={typeOptions}
+                placeholder={null}
                 aria-label="Filter projects by type"
-                className="
-                    rounded-lg
-                    border border-border
-                    bg-surface
-                    px-3 py-2
-                    text-sm text-text-primary
-                    outline-none
-                    transition
-                    hover:border-primary/60
-                    focus:border-primary
-                "
-            >
-                <option value="ALL">
-                    All Types
-                </option>
+                className="w-32 shrink-0"
+            />
 
-                {typeOptions.map((type) => (
-                    <option
-                        key={type}
-                        value={type}
-                    >
-                        {formatOptionLabel(type)}
-                    </option>
-                ))}
-            </select>
-
-
-            {/* Clear Filters */}
             {hasActiveFilters && (
-                <button
+                <Button
                     type="button"
+                    variant="ghost"
+                    size="md"
                     onClick={onClear}
-                    className="
-                        inline-flex items-center gap-2
-                        rounded-lg
-                        px-3 py-2
-                        text-sm text-text-secondary
-                        transition
-                        hover:bg-primary/10
-                        hover:text-primary
-                    "
+                    className="shrink-0 gap-2"
                 >
                     <RotateCcw
                         size={15}
@@ -190,7 +146,7 @@ function ProjectFilters({
                     />
 
                     Clear
-                </button>
+                </Button>
             )}
         </div>
     );

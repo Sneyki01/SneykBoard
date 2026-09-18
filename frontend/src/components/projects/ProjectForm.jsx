@@ -68,13 +68,13 @@ useEffect(() => {
         setFormData((currentForm) => ({
             ...currentForm,
             [name]: name === 'progress' ? Number(value) : value,
-        }))
+        }));
 
         if (errors[name]) {
             setErrors((currentErrors) => ({
                 ...currentErrors,
                 [name]: undefined,
-            }))
+            }));
         }
     }
 
@@ -122,7 +122,7 @@ useEffect(() => {
     }
 
     const submitLabel =
-    mode === 'edit' ? 'Save Changes' : 'Create project'
+    mode === 'edit' ? 'Save Changes' : 'Create project';
     
     return (
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -146,52 +146,54 @@ useEffect(() => {
                 error={errors.description}
             />
 
-            <Select
-                id="project-status"
-                name="status"
-                label="Status"
-                options={statusOptions}
-                placeholder="Select project status"
-                value={formData.status}
-                onChange={handleChange}
-                error={errors.status}
-            />
+            <div className='grid gap-5 sm:grid-cols-2'>
+                <Select
+                    id="project-status"
+                    name="status"
+                    label="Status"
+                    options={statusOptions}
+                    placeholder="Select project status"
+                    value={formData.status}
+                    onChange={handleChange}
+                    error={errors.status}
+                />
 
-            <Select
-                id="project-priority"
-                name="priority"
-                label="Priority"
-                options={priorityOptions}
-                placeholder="Select project priority"
-                value={formData.priority}
-                onChange={handleChange}
-                error={errors.priority}
-            />
+                <Select
+                    id="project-priority"
+                    name="priority"
+                    label="Priority"
+                    options={priorityOptions}
+                    placeholder="Select project priority"
+                    value={formData.priority}
+                    onChange={handleChange}
+                    error={errors.priority}
+                />
 
-            <Select
-                id="project-type"
-                name="type"
-                label="Project Type"
-                options={projectTypeOptions}
-                placeholder="Select project type"
-                value={formData.type}
-                onChange={handleChange}
-                error={errors.type}
-            />
+                <Select
+                    id="project-type"
+                    name="type"
+                    label="Project Type"
+                    options={projectTypeOptions}
+                    placeholder="Select project type"
+                    value={formData.type}
+                    onChange={handleChange}
+                    error={errors.type}
+                />
 
-            <Input
-                id="project-progress"
-                name="progress"
-                label="Progress"
-                type="number"
-                min="0"
-                max="100"
-                value={formData.progress}
-                onChange={handleChange}
-                error={errors.progress}
-            />
+                <Input
+                    id="project-progress"
+                    name="progress"
+                    label="Progress"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={formData.progress}
+                    onChange={handleChange}
+                    error={errors.progress}
+                />
+            </div>
 
-            <div className="flex flex-wrap justify-end gap-3 pt-4">
+            <div className="flex flex-wrap justify-end gap-3 border-t border-border pt-6">
                 <Button type="button" variant="secondary" onClick={onCancel}>
                     Cancel
                 </Button>

@@ -1,14 +1,15 @@
 import Card from '../ui/Card'
 import Button from '../ui/Button'
+import Badge from '../ui/Badge'
 
 function RecommendationCard({ recommendation, onOpenProject }) {
     return (
-        <Card variant="glow" className="relative overflow-hidden text-left">
-            <div className="absolute inset-0 bg-primary/5" />
-            <div className="absolute right-[-90px] top-[-90px] h-48 w-48 rounded-full bg-primary/25 blur-3xl" />
+        <Card variant="glow" className="relative overflow-hidden">
+            <div className="pointer-events-none absolute inset-0 bg-primary/5" />
+            <div className="pointer-events-none absolute -right-22 -top-22 h-48 w-48 rounded-full bg-primary/25 blur-3xl" />
 
             <div className="relative">
-                <p className="font-display text-xs uppercase tracking-[0.28em] text-primary">
+                <p className="font-display text-xs uppercase tracking-[0.28em] text-primary-soft">
                     System Recommendation
                 </p>
 
@@ -21,9 +22,11 @@ function RecommendationCard({ recommendation, onOpenProject }) {
                 </p>
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
-                    <span className="rounded-full border border-primary/50 bg-primary-dark/40 px-3 py-1 font-display text-xs uppercase tracking-[0.16em] text-primary">
-                        {recommendation.reason}
-                    </span>
+                    {recommendation.reason && (
+                        <Badge variant="primary">
+                            {recommendation.reason}
+                        </Badge>
+                    )}
 
                     {recommendation.projectId && (
                         <Button size="sm" variant="secondary" onClick={onOpenProject}>
@@ -33,7 +36,7 @@ function RecommendationCard({ recommendation, onOpenProject }) {
                 </div>
             </div>
         </Card>
-    )
+    );
 }
 
-export default RecommendationCard
+export default RecommendationCard;

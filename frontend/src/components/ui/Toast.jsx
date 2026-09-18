@@ -4,30 +4,30 @@ import { CircleCheck, CircleX, Info, TriangleAlert, X } from "lucide-react";
 const toastStyles = {
     success: {
         icon: CircleCheck,
-        iconClass: "text-green-400",
-        borderClass: "border-green-400/40",
-        glowClass: "shadow-[0_0_24px_rgba(34,197,94,0.18)]",
+        iconClass: "text-success",
+        borderClass: "border-success/40",
+        glowClass: "shadow-success-glow",
     },
 
     error: {
         icon: CircleX,
-        iconClass: "text-red-400",
-        borderClass: "border-red-400/40",
-        glowClass: "shadow-[0_0_24px_rgba(248,113,113,0.18)]",
+        iconClass: "text-danger",
+        borderClass: "border-danger/40",
+        glowClass: "shadow-danger-glow",
     },
 
     warning: {
         icon: TriangleAlert,
-        iconClass: "text-yellow-400",
-        borderClass: "border-yellow-400/40",
-        glowClass: "shadow-[0_0_24px_rgba(250,204,21,0.18)]",
+        iconClass: "text-warning",
+        borderClass: "border-warning/40",
+        glowClass: "shadow-warning-glow",
     },
 
     info: {
         icon: Info,
-        iconClass: "text-blue-400",
-        borderClass: "border-blue-400/40",
-        glowClass: "shadow-[0_0_24px_rgba(96,165,250,0.18)]",
+        iconClass: "text-info",
+        borderClass: "border-info/40",
+        glowClass: "shadow-info-glow",
     },
 };
 
@@ -55,7 +55,7 @@ function Toast({
         role={type === "error" ? "alert" : "status"}
         className={
             `pointer-events-auto
-            rounded-xl
+            rounded-sneyk-lg
             border
             bg-surface/95
             p-4
@@ -64,15 +64,15 @@ function Toast({
             ${style.glowClass}
             `}
         >
-            <div className="flex item-start gap-3">
-                <icon
+            <div className="flex items-start gap-3">
+                <Icon
                 size={22}
                 className={`mt-0.5 shrink-0 ${style.iconClass}`}
                 aria-hidden="true"
                 />
 
                 <div className="min-w-0 flex-1">
-                    <p className="font-display font-semibold text-text-primary">
+                    <p className="font-display text-sm font-semibold tracking-[0.06em] text-text-primary">
                         {title}
                     </p>
 
@@ -88,14 +88,21 @@ function Toast({
                 onClick={() => onClose(id)}
                 aria-label="Close notification"
                 className="
-                rounded-md p-1
+                inline-flex
+                h-8
+                w-8
+                shrink-0
+                items-center
+                justify-center
+                rounded-sneyk-md
                 text-text-secondary
-                transition
-                hover:bg-white/5
+                transition-colors
+                duration-200
+                hover:bg-surface-hover
                 hover:text-text-primary
-                focus:outline-none
-                focus:ring-2
-                focus:ring-primary
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-primary/60
                 "
                 >
                     <X size={17} aria-hidden="true" />

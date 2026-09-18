@@ -7,10 +7,10 @@ import ProjectTypeBadge from "../common/ProjectTypeBadge";
 
 function ProjectCard({ project, onArchive, onEdit, onDetails }) {
     return (
-        <Card variant="glow" className="text-left">
+        <Card className="text-left">
             <div className="flex items-start justify-between gap-4">
                 <div>
-                    <p className="font-display text-xs uppercase tracking-[0.18em] text-primary">
+                    <p className="font-display text-xs uppercase tracking-[0.18em] text-primary-soft">
                         Project
                     </p>
 
@@ -39,7 +39,7 @@ function ProjectCard({ project, onArchive, onEdit, onDetails }) {
                 <Button size="sm" variant="danger" onClick={() => onArchive(project.id)}>Archive</Button>
             </div>
         </Card>
-    )
+    );
 }
 
-export default ProjectCard
+export default ProjectCard;
